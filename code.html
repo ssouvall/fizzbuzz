@@ -29,7 +29,7 @@
     <header>
       <!-- Fixed navbar -->
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-custom">
-        <a id="navbar-brand" class="navbar-brand" href="#"><span><img id="tacocat-logo" src="/img/tacocat.png" alt="tacocat"></span>TacoCat</a>
+        <a id="navbar-brand" class="navbar-brand" href="#"><span><img id="logo" src="/img/Buzz.png" alt="fizzbuzz"></span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -45,10 +45,10 @@
                 <a class="nav-link" href="code.html">See The Code <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item nav-animate">
-                <a class="nav-link" href="//github.com/ssouvall/tacocat.git">Get The Code</a>
+                <a class="nav-link" href="//github.com/ssouvall/fizzbuzz.git">Get The Code</a>
             </li>
             <li class="nav-item nav-animate">
-                <a class="nav-link" href="about.html">About Me</a>
+                <a class="nav-link" href="about.html">About The Developer</a>
             </li>
           </ul>
           <ul class="navbar-nav ml-auto">
@@ -66,35 +66,134 @@
 
     <!-- Begin page content -->
     <main role="main" class="container">
-        <h1 class="intro">See the Code Below!</h1>
+        <h1 class="intro">Click the Buttons to See the Code!</h1>
         <br>
         <div class="col">
             <hr class="page-break">
         </div>
+        <div class="container">
+          <div class="row">
+              <button class="btn btn-danger form-control code-btn-odd" data-toggle="collapse" href="#getRange">Get the Range</button>
+            </div>
+          <div class="row">
+            <div id="getRange" class="col card card-body collapse">
+              <h5 class="card-title">Create a function that takes a start and end number as arguments, and creates an array of numbers containing both arguments and all numbers between them.</h5>
+<pre class="line-numbers">
+<code class="language-javascript">
+  //Gets the range of numbers
+  function getRange(start, end) {
+      let numbersArray = [];
+      for (let i = start; i &lt;= end; i++) {
+          numbersArray.push(i);
+      }
+      return numbersArray;
+  };
+</code>
+</pre>
+            </div>
+          </div>
+          <div class="row">
+              <button class="btn btn-danger form-control code-btn-even" data-toggle="collapse" href="#displayData">Display the Data</button>
+            </div>
+          <div class="row">
+            <div id="displayData" class="col card card-body collapse">
+              <h5 class="card-title">Next, create a function that takes the numbers array created in the last function, plus the numbers to represent "fizz" and "buzz". Create a template to display the data, and set up conditions to display "fizz", "buzz", or "fizzBuzz".</h5>
+
+<pre class="line-numbers">
+<code class="language-javascript">
+  //Display the numbers on the page
+  function displayData(numbers, fizz, buzz) {
+      const template = document.getElementById('data-template');
+      const resultsBody = document.getElementById('resultsBody');
+      //put template in html document to allow it to be counted and made dynamic (makes it able to be manipulated like a DOM element)
+      //note that importNode is like cloneNode but allows you to reference a &lt;template> in a different document, as opposed to a &lt;template> in the same document
+      let colCount = template.content.cloneNode(true).querySelectorAll("td").length;
+      //clear the table
+      resultsBody.innerHTML = "";
+
+      //loop over every element in the nubers array
+      //get the value and write it to the page
+      for (let i = 0; i &lt; numbers.length; i += colCount) {
+          let dataRow = template.content.cloneNode(true);
+
+          //Returns an array of columns
+          let cols = dataRow.querySelectorAll("td");
+          //loop over the columns
+          for (let colIndex = 0; colIndex &lt; cols.length; colIndex++) {
+              let value = numbers[i + colIndex];
+              if (typeof value === "undefined") {
+                  value = "";
+              } else if (value % fizz == 0 &amp;&amp; value % buzz == 0) {
+                  cols[colIndex].classList.add("boldIt3");
+                  value = "FizzBuzz";
+              } else if (value % buzz == 0 &amp;&amp; value % fizz != 0) {
+                  cols[colIndex].classList.add("boldIt");
+                  value = "Buzz";
+              } else if (value % fizz == 0 &amp;&amp; value % buzz != 0) {
+                  cols[colIndex].classList.add("boldIt2");
+                  value = "Fizz";
+              }
+              // Note td's use textContent to set content
+              cols[colIndex].textContent = value;
+          }
+          // add the row to the page
+          resultsBody.appendChild(dataRow);
+      }
+  };
+</code>
+</pre>
+            </div>
+          </div>
+           <div class="row">
+              <button class="btn btn-danger form-control code-btn-odd" data-toggle="collapse" href="#tableTransition">Make the Table Appear</button>
+            </div>
+          <div class="row">
+            <div id="tableTransition" class="col card card-body collapse">
+              <h5 class="card-title">Create a function that will disappear the user form and make the results table appear.</h5>
+<pre class="line-numbers">
+<code class="language-javascript">
+  //disappear form, appear table
+  function tableTransition() {
+      let form = document.getElementById("form-div");
+      let table = document.getElementById("resultDiv");
+      //make form disappear
+      form.classList.add("invisible");
+      //make result table appear with results
+      table.classList.remove("invisible");
+  }
+</code>
+</pre>
+            </div>
+          </div>
+          <div class="row">
+              <button class="btn btn-danger form-control code-btn-even" data-toggle="collapse" href="#printNumbers">Print the Numbers</button>
+            </div>
+          <div class="row">
+            <div id="printNumbers" class="col card card-body collapse">
+              <h5 class="card-title">Add a "click" event listener to the submit button. When clicked, the function takes the user's chosen range and chosen "fizz" and "buzz" numbers, and calls displayData with these as arguments. It also calls the tableTransition function.</h5>
+
 <pre class="line-numbers">
   <code class="language-javascript">
-  const tacoBtn = document.getElementById("tacoBtn");
+  document.getElementById("submitBtn").addEventListener("click", printNumbers)
 
-  tacoBtn.addEventListener('click', () => {
-      const userInput = document.getElementById('tacoCat').value;
-      let reverseWord = "";
-      let tacoResult = document.getElementById('tacoResult');
-      let comparedInput = userInput.replace(/[^a-z0-9]/gi,'');
-      let finalInput = comparedInput.toLowerCase();
-      let start = finalInput.length - 1;
-
-      for (let i = start; i >= 0; i--) {
-          reverseWord += finalInput[i]
-      }
-
-      if (finalInput == reverseWord) {
-          tacoResult.innerHTML = `${userInput} is ${reverseWord} backwards. That's a Palindrome!`;
-      } else {
-          tacoResult.innerHTML = `${userInput} is ${reverseWord} backwards. That is not a Palindrome.`
-      }
-  });
-  </code>
+  //Take user input and print numbers to the page
+  function printNumbers() {
+      //get user inputs for range
+      let startNum = parseInt(document.getElementById("numOne").value);
+      let endNum = parseInt(document.getElementById("numTwo").value);
+      //get user inputs for "fizz" and "buzz" numbers
+      let fizz = parseInt(document.getElementById("fizz").value);
+      let buzz = parseInt(document.getElementById("buzz").value)
+      let numbers = getRange(startNum, endNum);
+      displayData(numbers, fizz, buzz);
+      tableTransition();
+  };
+</code>
 </pre>
+            </div>
+          </div>
+
+      </div>
     </main>
 <br>
     <footer class="footer white">
@@ -119,7 +218,9 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- PrismJS -->
     <script src="/js/prism.js"></script>
-    <script src="/js/tacocat.js"></script>
+    <!-- Custom Scripts -->
+    <script src="/js/fizzBuzz.js"></script>
   </body>
 </html>

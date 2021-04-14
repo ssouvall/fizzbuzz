@@ -65,7 +65,7 @@ h5 {
 }
 
 .hero {
-  width: 70%;
+  width: 75%;
   height: auto;
   padding-top: 70px;
 }
@@ -240,4 +240,26 @@ code {
 
 .visible {
   display: block;
+}
+
+.code-btn-odd {
+  background-color: #3DADF2;
+  border-style: none;
+}
+
+.code-btn-even {
+  background-color: black;
+  border-style: none;
+  color: white;
+  margin: 10px 0;
+}
+
+.code-btn-even:hover,
+.code-btn-odd:hover {
+  background-color: gray;
+}
+
+.again-btn {
+  margin-left: 20px;
+  width: 5rem;
 }
