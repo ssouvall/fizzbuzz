@@ -200,8 +200,10 @@ code {
   padding-top: 200px !important;
 }
 
-#form-div {
-  width: 50%;
+@media(min-width: 800px) {
+  #form-div {
+    width: 50%;
+  }
 }
 
 .again-btn {
